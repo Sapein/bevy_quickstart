@@ -71,6 +71,26 @@ Here's a quick guide for porting this template's [VS Code snippets](../.vscode/b
 
 To make it easier to enable or disable these live templates for different projects, you can put them in a template group called `Bevy`.
 
+## Debugging with RustRover  
+
+The Template includes a Cargo Run Configuration for debugging purposes, however it has `--no-default-features` so it will work without any user configuration. However, this disables Dynamic Linking when using
+that option, along with several other tools and features that are provided for development/debugging purposes. If you want to be able to use these features while debugging you can do the following to get RustRover
+(or CLion or IntelliJ IDEA Ultimate) to debug a bevy game with dynamic linking enabled:
+
+1. Open the terminal and type in the following: `rustc --print target-libdir` and copy the output.
+2. GO to edit the "Run Native Debug" run configuration that is available within the IDE.
+3. Add in the following Environment Variable:
+  a. On Linux or Mac set the name of the Environment Variable to `LD_LIBRARY_PATH` with the following value: `./target/debug/deps:[LIBDIR_PATH]` where `LIBDIR_PATH` is the output of the command in step 1.
+  b. On Windows set the name of the Environment Variable to `PATH` with the following value: `.\target\debug\deps:[LIBDIR_PATH]` where `LIBDIR_PATH` is the output of the command in step 1.
+3. Remove the `--no-default-features` part of the command line argument in the Run Configuration.
+4. Click on Apply, and then click Debug, if everything is correct it should launch the game.
+
+After doing these steps you can now debug within RustRover, while keeping Dynamic Linking enabled, unfortunately because the path to your rust stdlib is dependent upon your own system. RustRover (and CLion and IntelliJ IDEA Ultimate)
+technically has Path Variables which *should* allow you to set these things, but it doesn't work with Cargo Run Configurations in Environment Variables apparently.
+
+If you want to use a different channel (IE: Nightly instead of Stable or vice-versa) you will need to add in the path to that libdir, but that's as simple as replacing `stable` with `nightly` in the path you get from step 1,
+you can also add both if you want to be able to switch between channel, for whatever reason, you can add the stdlib paths for every channel you will be using.
+
 ## Other templates
 
 There are many other Bevy templates out there.
