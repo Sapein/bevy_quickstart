@@ -78,7 +78,8 @@ that option, along with several other tools and features that are provided for d
 (or CLion or IntelliJ IDEA Ultimate) to debug a bevy game with dynamic linking enabled:
 
 1. Open the terminal and type in the following: `rustc --print target-libdir` and copy the output.
-2. GO to edit the "Run Native Debug" run configuration that is available within the IDE.
+2. Go to edit the "Run Native Debug" run configuration that is available within the IDE, this should be a Cargo Run Configuration.
+  - If you do not have this -- or any Cargo Run Configuration -- you can make one by clicking on the current Configuration, clicking Edit Configurations, and then clicking the Plus Icon and then Cargo.
 3. Add in the following Environment Variable:
   a. On Linux or Mac set the name of the Environment Variable to `LD_LIBRARY_PATH` with the following value: `./target/debug/deps:[LIBDIR_PATH]` where `LIBDIR_PATH` is the output of the command in step 1.
   b. On Windows set the name of the Environment Variable to `PATH` with the following value: `.\target\debug\deps:[LIBDIR_PATH]` where `LIBDIR_PATH` is the output of the command in step 1.
@@ -90,6 +91,20 @@ technically has Path Variables which *should* allow you to set these things, but
 
 If you want to use a different channel (IE: Nightly instead of Stable or vice-versa) you will need to add in the path to that libdir, but that's as simple as replacing `stable` with `nightly` in the path you get from step 1,
 you can also add both if you want to be able to switch between channel, for whatever reason, you can add the stdlib paths for every channel you will be using.
+
+Please note that if you do these steps *and* it still doesn't work, please ensure that you're on the right channel in the Run Configuration and in your libdir path, as they should match. (IE: Nightly, Stable, Beta), and also make
+sure that there are no erronious spaces -- especially at the end -- as any extra spaces (at the beginning or end) of the values *WILL* cause it to fail.
+
+> [!NOTE]
+> <details>
+> <summary>About the steps provided in this section</summary>
+>
+> This is not the only way to debug a game in RustRover with Dynamic Linking enabled. If you are using the Shell Script Run Configurations, you can attach the debugger to the game afterwards.
+> To do this, you will need to run the Shell Script Run Configuration you want to use, then use Run > Attach to Process and attach the process that is the name of your game, not the one named `bevy`.
+>
+> This does not work for the web scripts.
+> </details>
+
 
 ## Other templates
 
