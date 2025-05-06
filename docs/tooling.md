@@ -92,7 +92,7 @@ This template comes with a Cargo Run Configuration that disables dynamic linking
 3. Add the following Environment Variable:
   a. Linux or Mac: `LD_LIBRARY_PATH` = `./target/debug/deps:<LIBDIR_PATH>` where `<LIBDIR_PATH>` is the output from step 1.
   b. Windows: `PATH` = `.\target\debug\deps:<LIBDIR_PATH>`, where `<LIBDIR_PATH>` is the output from step 1.
-3. Remove the `--no-default-features` from the command line argument in the Run Configuration.
+3. Remove `--no-default-features` from the command in the Run Configuration.
 4. Click Apply and then Debug, and if everything is correct it should launch the game.
 
 If you want to use multiple different channels for the same project, you will need to add in a `LIBDIR_PATH` for every channel you intend on using.
