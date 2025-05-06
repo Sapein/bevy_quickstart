@@ -103,12 +103,11 @@ If you're still having issues, please ensure that the channels in the path and t
 
 > [!NOTE]
 > <details>
-> <summary>About the steps provided in this section</summary>
+> <summary>Attaching the debugger to a running game</summary>
 >
-> This is not the only way to debug a game in RustRover with Dynamic Linking enabled. If you are using the Shell Script Run Configurations, you can attach the debugger to the game afterwards.
-> To do this, you will need to run the Shell Script Run Configuration you want to use, then use Run > Attach to Process and attach the process that is the name of your game, not the one named `bevy`.
+> If you started your game with a Shell Script Run Configuration, you can attach the debugger to it while it's running by using `Run > Attach to Process` and selecting the process with the same name as your game (not the one named `bevy`).
 >
-> This does not work for the web scripts.
+> This does not work for web builds.
 > </details>
 
 
