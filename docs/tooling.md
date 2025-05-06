@@ -88,8 +88,7 @@ To make it easier to enable or disable these live templates for different projec
 This template comes with a Cargo Run Configuration that disables dynamic linking (and dev tools) so that the debugger will work out of the box. If you'd like to enable those features in the debugger, it'll require some setup:
 
 1. Run `rustc --print target-libdir` and copy the output. You can specify a channel here with e.g. `rustc +nightly --print target-libdir`
-2. Go to edit the "Run Native Debug" run configuration that is available within the IDE, this should be a Cargo Run Configuration.
-  - If the configuration displays a little terminal icon, then it is not the right Run Configuration.
+2. Edit the Cargo Run Configuration named "Run Native Debug" (it should be the one without a terminal icon).
 3. Add in the following Environment Variable:
   a. Linux or Mac: `LD_LIBRARY_PATH` = `./target/debug/deps:<LIBDIR_PATH>` where `<LIBDIR_PATH>` is the output from step 1.
   b. Windows: `PATH` = `.\target\debug\deps:<LIBDIR_PATH>`, where `<LIBDIR_PATH>` is the output from step 1.
