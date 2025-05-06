@@ -1,3 +1,6 @@
+// Support configuring Bevy lints within code.
+#![cfg_attr(bevy_lint, feature(register_tool), register_tool(bevy))]
+
 mod asset_tracking;
 mod audio;
 mod demo;
@@ -6,20 +9,21 @@ mod dev_tools;
 mod screens;
 mod theme;
 
-use bevy::{
-    asset::AssetMetaCheck,
-    audio::{AudioPlugin, Volume},
-    prelude::*,
-};
+use bevy::{asset::AssetMetaCheck, prelude::*};
 
 pub struct AppPlugin;
 
 impl Plugin for AppPlugin {
     fn build(&self, app: &mut App) {
-        // Order new `AppSet` variants by adding them here:
+        // Order new `AppSystems` variants by adding them here:
         app.configure_sets(
             Update,
-            (AppSet::TickTimers, AppSet::RecordInput, AppSet::Update).chain(),
+            (
+                AppSystems::TickTimers,
+                AppSystems::RecordInput,
+                AppSystems::Update,
+            )
+                .chain(),
         );
 
         // Spawn the main camera.
@@ -43,12 +47,6 @@ impl Plugin for AppPlugin {
                     }
                     .into(),
                     ..default()
-                })
-                .set(AudioPlugin {
-                    global_volume: GlobalVolume {
-                        volume: Volume::Linear(0.3),
-                    },
-                    ..default()
                 }),
         );
 
@@ -68,7 +66,7 @@ impl Plugin for AppPlugin {
 /// When adding a new variant, make sure to order it in the `configure_sets`
 /// call above.
 #[derive(SystemSet, Debug, Clone, Copy, Eq, PartialEq, Hash, PartialOrd, Ord)]
-enum AppSet {
+enum AppSystems {
     /// Tick timers.
     TickTimers,
     /// Record player input.

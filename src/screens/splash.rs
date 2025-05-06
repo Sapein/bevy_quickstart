@@ -6,7 +6,7 @@ use bevy::{
     prelude::*,
 };
 
-use crate::{AppSet, screens::Screen, theme::prelude::*};
+use crate::{AppSystems, screens::Screen, theme::prelude::*};
 
 pub(super) fn plugin(app: &mut App) {
     // Spawn splash screen.
@@ -17,8 +17,8 @@ pub(super) fn plugin(app: &mut App) {
     app.add_systems(
         Update,
         (
-            tick_fade_in_out.in_set(AppSet::TickTimers),
-            apply_fade_in_out.in_set(AppSet::Update),
+            tick_fade_in_out.in_set(AppSystems::TickTimers),
+            apply_fade_in_out.in_set(AppSystems::Update),
         )
             .run_if(in_state(Screen::Splash)),
     );
@@ -30,8 +30,8 @@ pub(super) fn plugin(app: &mut App) {
     app.add_systems(
         Update,
         (
-            tick_splash_timer.in_set(AppSet::TickTimers),
-            check_splash_timer.in_set(AppSet::Update),
+            tick_splash_timer.in_set(AppSystems::TickTimers),
+            check_splash_timer.in_set(AppSystems::Update),
         )
             .run_if(in_state(Screen::Splash)),
     );
@@ -39,7 +39,7 @@ pub(super) fn plugin(app: &mut App) {
     // Exit the splash screen early if the player hits escape.
     app.add_systems(
         Update,
-        continue_to_loading_screen
+        enter_title_screen
             .run_if(input_just_pressed(KeyCode::Escape).and(in_state(Screen::Splash))),
     );
 }
@@ -137,10 +137,10 @@ fn tick_splash_timer(time: Res<Time>, mut timer: ResMut<SplashTimer>) {
 
 fn check_splash_timer(timer: ResMut<SplashTimer>, mut next_screen: ResMut<NextState<Screen>>) {
     if timer.0.just_finished() {
-        next_screen.set(Screen::Loading);
+        next_screen.set(Screen::Title);
     }
 }
 
-fn continue_to_loading_screen(mut next_screen: ResMut<NextState<Screen>>) {
-    next_screen.set(Screen::Loading);
+fn enter_title_screen(mut next_screen: ResMut<NextState<Screen>>) {
+    next_screen.set(Screen::Title);
 }
