@@ -89,7 +89,7 @@ This template comes with a Cargo Run Configuration that disables dynamic linking
 
 1. Run `rustc --print target-libdir` and copy the output. You can specify a channel here with e.g. `rustc +nightly --print target-libdir`
 2. Edit the Cargo Run Configuration named "Run Native Debug" (it should be the one without a terminal icon).
-3. Add in the following Environment Variable:
+3. Add the following Environment Variable:
   a. Linux or Mac: `LD_LIBRARY_PATH` = `./target/debug/deps:<LIBDIR_PATH>` where `<LIBDIR_PATH>` is the output from step 1.
   b. Windows: `PATH` = `.\target\debug\deps:<LIBDIR_PATH>`, where `<LIBDIR_PATH>` is the output from step 1.
 3. Remove the `--no-default-features` from the command line argument in the Run Configuration.
